@@ -1,2 +1,4 @@
-# OOP-Lab01
-OOP-Lab01-EnvironmentSetup&amp;JavaBasics
+# OOP-Lab
+OOP-Lab-EnvironmentSetup&amp;JavaBasics
+Name: Le Minh Dung
+MSSV:20235686
