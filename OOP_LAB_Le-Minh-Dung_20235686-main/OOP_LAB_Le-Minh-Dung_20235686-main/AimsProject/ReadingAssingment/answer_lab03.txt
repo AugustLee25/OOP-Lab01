@@ -1,0 +1,41 @@
+Suggestion 1 (Trang 11):
+Suggestion: Write a toString() method for the DigitalVideoDisc class. What should be the return type of this method?
+
+Trả lời:
+Phương thức toString() trong Java luôn trả về kiểu String, bởi vì nó được định nghĩa như vậy trong lớp cha Object. Khi bạn ghi đè (override) toString() trong lớp DigitalVideoDisc, bạn cần trả về một chuỗi mô tả đối tượng — ví dụ như tiêu đề, giá, độ dài,... Mục đích chính là cung cấp thông tin dễ đọc khi in đối tượng ra màn hình hoặc log file.
+
+Câu hỏi Part 14:
+
+Câu hỏi Part 15:
+If the passing object is not an instance of Media, what happens?
+
+Trả lời:
+Khi bạn truyền một đối tượng không thuộc lớp Media vào phương thức equals(), biểu thức instanceof sẽ đánh giá là false. Kết quả là phương thức equals() sẽ trả về false ngay lập tức mà không cần so sánh thêm. Điều này đảm bảo rằng chỉ các đối tượng cùng kiểu dữ liệu mới được xem xét là "bằng nhau".
+
+Câu hỏi Part 17:
+What class should implement the Comparable interface?
+Lớp Media nên triển khai Comparable<Media> để thiết lập quy tắc sắp xếp mặc định (natural order) áp dụng chung cho toàn bộ hệ thống phân cấp media, bao gồm cả sách, đĩa DVD và đĩa CD.
+
+In those classes, how should you implement the compareTo() method to reflect the ordering that we want?
+Nếu lựa chọn thứ tự mặc định là sắp xếp theo tiêu đề, thì phương thức compareTo() trong Media có thể được viết như sau:
+
+@Override
+public int compareTo(Media other) {
+    return this.getTitle().compareToIgnoreCase(other.getTitle());
+}
+Nếu muốn quy tắc mặc định chặt chẽ hơn (ví dụ nếu tiêu đề trùng thì so sánh giá), bạn có thể mở rộng như sau:
+
+int titleCompare = this.getTitle().compareToIgnoreCase(other.getTitle());
+if (titleCompare != 0) return titleCompare;
+return Float.compare(this.getCost(), other.getCost());
+Can we have two ordering rules of the item (by title then cost and by cost then title) if we use this Comparable interface approach?
+Không thể. Giao diện Comparable chỉ cho phép định nghĩa duy nhất một cách so sánh “tự nhiên” thông qua phương thức compareTo(). Nếu bạn muốn hỗ trợ nhiều kiểu sắp xếp khác nhau, ví dụ sắp xếp theo giá rồi tiêu đề, bạn nên dùng thêm các đối tượng Comparator để định nghĩa các chiến lược sắp xếp linh hoạt hơn.
+
+Suppose the DVDs have a different ordering rule... How would you modify your code to allow this?
+Nếu bạn muốn áp dụng quy tắc sắp xếp riêng cho DigitalVideoDisc, chẳng hạn sắp xếp theo tiêu đề (tăng dần), sau đó độ dài (giảm dần), rồi đến giá (giảm dần), thì có hai cách:
+
+Cách 1: Ghi đè compareTo() trong lớp DigitalVideoDisc để áp dụng quy tắc riêng biệt đó.
+
+Cách 2 (khuyến khích hơn): Tạo một Comparator<Media> riêng (ví dụ: DvdComparator) và cài đặt logic trong phương thức compare(). Trong comparator đó, bạn kiểm tra kiểu của hai đối tượng, nếu đều là DVD thì áp dụng quy tắc riêng; nếu không, chuyển sang so sánh theo quy tắc chung hoặc một comparator khác.
+
+Cách dùng Comparator sẽ giúp mã nguồn rõ ràng, linh hoạt và dễ bảo trì hơn so với cố ép logic phức tạp vào compareTo() của Comparable.

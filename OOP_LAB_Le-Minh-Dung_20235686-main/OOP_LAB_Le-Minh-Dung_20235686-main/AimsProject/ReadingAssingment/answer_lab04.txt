@@ -1,0 +1,41 @@
+
+1. So sánh giữa AWT và Swing dựa trên container cấp cao, tên lớp thành phần, xử lý sự kiện và giao diện:
+- Container cấp cao (Top-level Container): AWT sử dụng Frame như là cửa sổ chính, nơi các thành phần giao diện được đặt trực tiếp. Trong khi đó, Swing sử dụng JFrame, và yêu cầu thêm các thành phần vào vùng content thông qua phương thức getContentPane().
+- Tên lớp của thành phần giao diện: AWT cung cấp các lớp như Label, TextField, Button, còn Swing có các lớp tương ứng với tiền tố 'J', như JLabel, JTextField, JButton.
+- Xử lý sự kiện: Cả hai đều hỗ trợ ActionListener để lắng nghe hành động từ người dùng, tuy nhiên Swing có hỗ trợ thêm nhiều loại listener như MouseListener, KeyListener, giúp phản hồi đa dạng tương tác hơn.
+- Giao diện người dùng: Giao diện của AWT phụ thuộc vào hệ điều hành, dẫn đến tính không đồng nhất giữa các nền tảng. Swing thì sử dụng cơ chế vẽ riêng (Java painting), đảm bảo giao diện nhất quán và hỗ trợ nhiều kiểu giao diện (Look and Feel), dễ dàng tùy chỉnh.
+
+2. Phân biệt container cấp cao và container cấp phụ:
+- Container cấp cao (Top-level): Là các thành phần như Frame (AWT) hoặc JFrame (Swing), có thể chạy độc lập như một cửa sổ chính trên giao diện đồ họa.
+- Container cấp phụ (Secondary-level): Bao gồm Panel trong AWT và JPanel trong Swing, thường dùng để nhóm các thành phần nhỏ hơn, chỉ hoạt động khi nằm trong một container cấp cao.
+
+3. Cách cài đặt ButtonListener trong lớp NumberGrid:
+- Trong lớp NumberGrid, tôi xây dựng một lớp nội ButtonListener cài đặt giao diện ActionListener.
+- Khi các nút số từ 0 đến 9 được nhấn, phương thức getActionCommand() được sử dụng để lấy nội dung nút, sau đó hiển thị trên JTextField tf.
+- Nếu nút "Clear" được nhấn, nó sẽ xóa nội dung trường văn bản bằng cách đặt giá trị rỗng.
+
+4. Cách xử lý sự kiện cho thanh menu trong StoreManagerScreen:
+- Tôi thiết kế một JMenuBar chứa menu "Options" với các lựa chọn như "View store" và nhóm "Update Store", bao gồm "Add Book", "Add CD", "Add DVD", và "Remove Item".
+- Mỗi JMenuItem đều được gắn ActionListener riêng biệt để mở giao diện tương ứng:
+  - "View store": trở về màn hình chính StoreManagerScreen.
+  - Các mục thêm media: mở cửa sổ để thêm từng loại sản phẩm.
+  - "Remove Item": mở cửa sổ xóa media.
+- Trước khi chuyển sang giao diện mới, cửa sổ hiện tại được đóng lại thông qua một biến tĩnh currentScreen để đảm bảo chỉ một giao diện hiển thị tại một thời điểm.
+
+5. Xử lý nút "Play" trong MediaStore:
+- Trong giao diện MediaStore, nếu media hỗ trợ phát (có thể ép kiểu sang Playable), tôi hiển thị nút "Play".
+- Khi nút được nhấn, một JDialog nhỏ hiển thị thông báo đang phát media.
+- Phương thức play() được gọi từ đối tượng media đã ép kiểu, và một thông báo như "Media is playing" được hiển thị trong hộp thoại.
+
+6. Tổ chức giao diện thêm media (AddBookToStoreScreen, AddCompactDiscToStoreScreen, AddDigitalVideoDiscToStoreScreen):
+- Tôi tạo một lớp cha AddItemToStoreScreen kế thừa từ JFrame, dùng chung các thành phần như JTextField để nhập tiêu đề, thể loại, giá, và các nút thao tác "Add" và "Cancel".
+- Các lớp con kế thừa lớp cha này để mở rộng thêm:
+  - AddBookToStoreScreen: sử dụng trực tiếp các trường cơ bản.
+  - AddCompactDiscToStoreScreen: thêm trường "artist".
+  - AddDigitalVideoDiscToStoreScreen: bổ sung "director" và "length".
+- Các trường nhập liệu được kiểm tra hợp lệ trước khi thêm media, kết quả được phản hồi bằng JOptionPane.
+
+7. Tính năng mở rộng cho trình quản lý cửa hàng (Store Manager):
+- Tôi thêm chức năng "Remove Item" trong phần quản lý sản phẩm.
+- Tạo một lớp RemoveItemFromStoreScreen kế thừa từ JFrame, có JComboBox để người dùng chọn sản phẩm muốn xóa.
+- Khi xác nhận xóa, media được gỡ khỏi danh sách trong Store, sau đó trở lại giao diện chính và thông báo bằng JOptionPane rằng thao tác đã hoàn tất.

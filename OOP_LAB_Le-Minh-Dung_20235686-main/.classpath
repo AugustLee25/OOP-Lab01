@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="OOP_LAB_Le-Minh-Dung_20235686-main/AimsProject/hust.soict.hedspi.aims/hust.soict.hedspi.aims/src"/>
+	<classpathentry kind="src" path="OOP_LAB_Le-Minh-Dung_20235686-main/OtherProject/OtherProject/src"/>
+	<classpathentry kind="output" path="OOP_LAB_Le-Minh-Dung_20235686-main/AimsProject/hust.soict.hedspi.aims/hust.soict.hedspi.aims/bin"/>
+</classpath>
